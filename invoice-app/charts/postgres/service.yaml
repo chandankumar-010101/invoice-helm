@@ -1,0 +1,14 @@
+# invoice-app/templates/postgres/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "fullname" . }}-postgres-service
+spec:
+  selector:
+    app: {{ template "fullname" . }}-postgres
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: 5432
+  clusterIP: None
+

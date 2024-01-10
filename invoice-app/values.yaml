@@ -1,0 +1,46 @@
+# invoice-app/values.yaml
+postgres:
+  replicaCount: 1
+  image:
+    repository: postgres:latest
+    tag: latest
+  resources:
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+    requests:
+      memory: "256Mi"
+      cpu: "250m"
+
+redis:
+  replicaCount: 1
+  image:
+    repository: redis:latest
+    tag: latest
+  resources:
+    limits:
+      memory: "256Mi"
+      cpu: "100m"
+    requests:
+      memory: "128Mi"
+      cpu: "50m"
+
+django:
+  replicaCount: 2
+  image:
+    repository: chandan010101/cicd-e2e
+    tag: "12"
+  resources:
+    limits:
+      memory: "1Gi"
+      cpu: "2"
+    requests:
+      memory: "500Mi"
+      cpu: "1000m"
+  env:
+    POSTGRES_USER: "my-postgres-secret"
+    POSTGRES_PASSWORD: "my-postgres-secret"
+    POSTGRES_DB: "my-postgres-secret"
+    POSTGRES_HOST: "my-postgres-service"
+    WEBSOCKET_PORT: "8888"
+

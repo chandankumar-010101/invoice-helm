@@ -1,0 +1,19 @@
+frontend:
+  image:
+    repository: chandan010101/fs
+    tag: latest
+
+  replicaCount: 1
+
+  env:
+    - name: WEBSOCKET_URL
+      value: "ws://my-django-app-service:8888"
+
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 50m
+      memory: 64Mi
+

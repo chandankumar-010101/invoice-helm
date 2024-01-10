@@ -1,0 +1,40 @@
+# invoice-app/templates/redis/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ template "fullname" . }}-redis
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}-redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:latest
+          ports:
+            - containerPort: 6379
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "fullname" . }}-redis-secret
+                  key: REDIS_PASSWORD
+          volumeMounts:
+            - name: redis-data
+              mountPath: /data
+            - name: redis-config
+              mountPath: /usr/local/etc/redis/redis.conf
+              subPath: redis.conf
+      volumes:
+        - name: redis-data
+          persistentVolumeClaim:
+            claimName: {{ template "fullname" . }}-redis-pvc
+        - name: redis-config
+          configMap:
+            name: {{ template "fullname" . }}-redis-config
+

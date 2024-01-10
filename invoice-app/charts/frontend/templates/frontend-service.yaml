@@ -1,0 +1,13 @@
+# invoice-app/templates/frontend/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "fullname" . }}-frontend
+spec:
+  selector:
+    app: {{ template "fullname" . }}-frontend
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+
